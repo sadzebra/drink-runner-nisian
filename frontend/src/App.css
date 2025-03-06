@@ -1,0 +1,75 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  color: white;
+}
+
+.text{
+  color: whitesmoke;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.two-column-layout {
+  display: flex;          /* Enable flexbox layout */
+  width: 100%;           /* Make the container span full width */
+}
+
+.left-column, .right-column {
+  width: 50%;           /* Each column takes up half the width */
+  padding: 20px;         /* Add some padding for spacing */
+}
+
+.drink-order-form {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  gap: 10px;
+}
+
+/* Removed .form-row styles */
+
+.form-row{
+/*  background-color: red;*/
+  height: 40px;
+}
+
+.drink-order-form input[type='text'],
+.drink-order-form button {
+/*  padding: 8px;*/
+/*  width: 100%;*/
+  height: 100%;
+  margin-right: 10px;
+/*  border: 1px solid #ccc;*/
+/*  border-radius: 4px;*/
+}
+
+.drink-order-form button {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  wdith:95%;
+}

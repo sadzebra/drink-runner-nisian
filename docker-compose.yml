@@ -1,0 +1,69 @@
+services:
+  db:
+    image: postgres:16.0-bookworm
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: elephant
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - db_net
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  api:
+    image: nisienai/tea-round-picker:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__TeaRoundPickerDb: Host=db;Port=5432;Database=tea_round_picker;Username=postgres;Password=elephant;
+      ASPNETCORE_URLS: http://0.0.0.0:8794
+    ports:
+      - 8794:8794 # REST API
+    restart: unless-stopped
+    networks:
+      - db_net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app:cached
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      api:
+        condition: service_started
+    environment:
+      REACT_APP_API_URL: /api # Important: Use a relative path
+    networks:
+      - db_net
+    restart: unless-stopped
+
+  reverse-proxy:
+    image: nginx:latest
+    ports:
+      - 80:80 # Expose port 80 for the reverse proxy
+    depends_on:
+      - frontend
+      - api
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - db_net
+    restart: unless-stopped
+
+networks:
+  db_net:
+    driver: bridge
+
+volumes:
+  db_data:
