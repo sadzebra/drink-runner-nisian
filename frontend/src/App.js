@@ -4,19 +4,6 @@ import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-/*
-    TODO (for v1.0)
-        - Reconfigure the way the data is store, let's try and reduce some of these 'useState' declarations
-            - The data can probably be stored in just a couple of state variables
-        - Update the UI with bootstraps or MUI and make it look better
-            - Bonus points for adding transitions
-        - Attempt to abstract UI and logic to components
-        - Implement State provider ??????
-        - implement routing
-        - Produce documentation
-*/
-
-
 function App() {
     const [users, setUsers] = useState()
     const [showStartBtn, setShowStartBtn] = useState(true)
